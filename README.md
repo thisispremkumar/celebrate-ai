@@ -1,6 +1,8 @@
 # CelebrateAI – GenAI Celebration & Event Planner
 
 > Autonomous, Generative AI-powered planning assistant designed to help users organize **Weddings, Birthdays, and Community Events** with real-time budgets, interactive timelines, vendor checklists & RFPs, and personalized experiential ideas.
+> 
+> 🌐 **Live Cloud Run Deployment**: [https://celebrate-ai-730243407394.us-central1.run.app](https://celebrate-ai-730243407394.us-central1.run.app)
 
 ---
 
