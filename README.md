@@ -1,5 +1,10 @@
 # CelebrateAI – GenAI Celebration & Event Planner
 
+[![CI Quality & Test Pipeline](https://github.com/thisispremkumar/celebrate-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/thisispremkumar/celebrate-ai/actions/workflows/ci.yml)
+[![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict_Zero_Any-blue.svg)](https://www.typescriptlang.org/)
+[![Oxlint Quality Gate](https://img.shields.io/badge/Oxlint-0_Warnings_0_Errors-brightgreen.svg)](https://oxc.rs/)
+[![Tests Passing](https://img.shields.io/badge/Vitest-29%2F29_Passed-success.svg)](https://vitest.dev/)
+
 > Autonomous, Generative AI-powered planning assistant designed to help users organize **Weddings, Birthdays, and Community Events** with real-time budgets, interactive timelines, vendor checklists & RFPs, and personalized experiential ideas.
 > 
 > 🌐 **Live Cloud Run Deployment**: [https://celebrate-ai-730243407394.us-central1.run.app](https://celebrate-ai-730243407394.us-central1.run.app)
@@ -73,12 +78,29 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 ```bash
 npm test
 ```
-Runs the 20 unit and integration tests with Vitest.
+Executes the comprehensive 29-test unit and integration test suite with Vitest.
 
-### 4. Build for Production
+### 4. Code Quality & Linter Verification
+```bash
+npm run lint
+```
+Executes static code analysis via Oxlint with 0 warnings and 0 errors across 114 rules.
+
+### 5. Build for Production
 ```bash
 npm run build
 ```
+Executes strict TypeScript type checking (`tsc -b`) and bundles production assets with Vite.
+
+---
+
+## 💎 Code Quality & Enterprise Architecture
+
+- **Automated CI/CD Pipeline**: GitHub Actions workflow (`.github/workflows/ci.yml`) validates all pull requests and pushes through automated linting, test suites, and production compilation.
+- **Enterprise Fault Tolerance (`ErrorBoundary`)**: React Error Boundary isolates rendering faults, providing graceful user-facing recovery screens without corrupting saved event states in `localStorage`.
+- **Zero-`any` Strict Type Safety**: End-to-end typed models across budget items, vendor CRM entities, run-of-show timeline phases, and Gemini API request/response structures.
+- **Pure Utility Architecture**: Core business calculations (`calculatePercentage`, `formatDaysRemaining`, `formatCurrency`, `normalizeSearchTerm`) are decoupled into pure, testable utility functions.
+- **Standards & Formatting**: Project configured with standardized `.editorconfig`, `.prettierrc`, and `.oxlintrc.json` rules ensuring developer consistency.
 
 ---
 

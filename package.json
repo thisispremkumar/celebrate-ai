@@ -1,7 +1,23 @@
 {
-  "name": "challenge-5",
+  "name": "celebrate-ai",
+  "description": "Autonomous GenAI-Powered Celebration & Event Planner for Weddings, Birthdays, and Community Festivals",
+  "version": "1.0.0",
+  "author": "Prem Kumar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thisispremkumar/celebrate-ai.git"
+  },
+  "keywords": [
+    "celebration-planner",
+    "event-management",
+    "generative-ai",
+    "google-gemini",
+    "budget-planner",
+    "timeline-scheduling",
+    "vendor-management"
+  ],
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

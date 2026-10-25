@@ -73,6 +73,33 @@ export function extractJsonFromText<T>(text: string, fallback: T): T {
   }
 }
 
+interface GeminiRequestBody {
+  contents: Array<{
+    parts: Array<{ text: string }>;
+  }>;
+  generationConfig: {
+    temperature: number;
+    maxOutputTokens: number;
+  };
+  systemInstruction?: {
+    parts: Array<{ text: string }>;
+  };
+}
+
+interface GeminiErrorResponse {
+  error?: {
+    message?: string;
+  };
+}
+
+interface GeminiResponseData {
+  candidates?: Array<{
+    content?: {
+      parts?: Array<{ text?: string }>;
+    };
+  }>;
+}
+
 // Low-level caller to Google Gemini API
 async function callGemini(
   prompt: string,
@@ -86,7 +113,7 @@ async function callGemini(
   const model = getStoredModel();
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-  const body: any = {
+  const body: GeminiRequestBody = {
     contents: [
       {
         parts: [{ text: prompt }],
@@ -113,12 +140,12 @@ async function callGemini(
   });
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
+    const errorData = (await response.json().catch(() => ({}))) as GeminiErrorResponse;
     const message = errorData?.error?.message || `HTTP ${response.status} ${response.statusText}`;
     throw new Error(`Gemini API Error: ${message}`);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as GeminiResponseData;
   const candidate = data.candidates?.[0];
   const text = candidate?.content?.parts?.[0]?.text;
   if (!text) {
@@ -318,8 +345,16 @@ Respond ONLY with a JSON array in the following format:
   }
 ]`;
 
+      interface GeminiRawIdea {
+        category?: IdeaCategory;
+        title?: string;
+        description?: string;
+        costImpact?: 'budget_saver' | 'low' | 'medium' | 'high';
+        tags?: string[];
+      }
+
       const raw = await callGemini(prompt, 'You are an elite event designer.');
-      const parsed = extractJsonFromText<any[]>(raw, []);
+      const parsed = extractJsonFromText<GeminiRawIdea[]>(raw, []);
       if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed.map((p, idx) => ({
           id: `ai-idea-gemini-${Date.now()}-${idx}`,

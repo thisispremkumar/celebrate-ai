@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 import { sendChatMessage } from '../services/aiService';
-import type { ChatMessage } from '../types/event';
+import type { ChatMessage, BudgetCategory } from '../types/event';
 
 export const AICopilotChat: React.FC = () => {
   const {
@@ -72,7 +72,7 @@ export const AICopilotChat: React.FC = () => {
   const handleApplyAction = (action: NonNullable<ChatMessage['suggestedActions']>[number], actionKey: string) => {
     if (action.actionType === 'add_budget') {
       addBudgetItem({
-        category: action.payload.category || 'Other',
+        category: (action.payload.category as BudgetCategory) || 'Other',
         title: action.payload.title || 'AI Recommended Expense',
         estimatedCost: action.payload.estimatedCost || 500,
         actualCost: 0,

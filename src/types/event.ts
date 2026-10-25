@@ -113,16 +113,33 @@ export interface PersonalizedIdea {
   aiGenerated?: boolean;
 }
 
+export interface ChatActionPayload {
+  query?: string;
+  category?: string;
+  title?: string;
+  description?: string;
+  phase?: TimelinePhase;
+  priority?: TaskPriority;
+  targetDate?: string;
+  timeOfDay?: string;
+  estimatedCost?: number;
+  actualCost?: number;
+  quotedPrice?: number;
+  notes?: string;
+}
+
+export interface ChatSuggestedAction {
+  label: string;
+  actionType: 'add_budget' | 'add_timeline' | 'add_vendor' | 'add_idea';
+  payload: ChatActionPayload;
+}
+
 export interface ChatMessage {
   id: string;
   sender: 'user' | 'assistant' | 'system';
   text: string;
   timestamp: string;
-  suggestedActions?: {
-    label: string;
-    actionType: 'add_budget' | 'add_timeline' | 'add_vendor' | 'add_idea';
-    payload: any;
-  }[];
+  suggestedActions?: ChatSuggestedAction[];
 }
 
 export interface CelebrationEvent {

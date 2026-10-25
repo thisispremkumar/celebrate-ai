@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 
+import { formatDaysRemaining } from '../utils/formatters';
+
 interface EventHeroProps {
   onEditDetails: () => void;
 }
@@ -18,26 +20,6 @@ interface EventHeroProps {
 export const EventHero: React.FC<EventHeroProps> = ({ onEditDetails }) => {
   const { activeEvent } = useEventContext();
   const { details } = activeEvent;
-
-  // Calculate days remaining
-  const calculateDaysRemaining = (targetDate: string): string => {
-    try {
-      const target = new Date(targetDate);
-      const now = new Date();
-      // zero out time
-      target.setHours(0, 0, 0, 0);
-      now.setHours(0, 0, 0, 0);
-      const diffTime = target.getTime() - now.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-      if (diffDays === 0) return '🎉 Today is the big day!';
-      if (diffDays === 1) return '⏳ 1 day away!';
-      if (diffDays > 1) return `⏳ In ${diffDays} days`;
-      return `Completed on ${targetDate}`;
-    } catch {
-      return targetDate;
-    }
-  };
 
   const triggerConfetti = () => {
     confetti({
@@ -85,7 +67,7 @@ export const EventHero: React.FC<EventHeroProps> = ({ onEditDetails }) => {
               {details.type}
             </span>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              {calculateDaysRemaining(details.date)}
+              {formatDaysRemaining(details.date)}
             </span>
           </div>
           <h1>{details.title}</h1>

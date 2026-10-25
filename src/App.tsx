@@ -8,6 +8,7 @@ import {
   Bot,
 } from 'lucide-react';
 import { EventProvider, useEventContext } from './context/EventContext';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Navbar } from './components/Navbar';
 import { EventHero } from './components/EventHero';
 import { DashboardOverview } from './components/DashboardOverview';
@@ -232,9 +233,11 @@ const PlannerApp: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <EventProvider>
-      <PlannerApp />
-    </EventProvider>
+    <ErrorBoundary>
+      <EventProvider>
+        <PlannerApp />
+      </EventProvider>
+    </ErrorBoundary>
   );
 };
 
